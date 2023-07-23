@@ -1,0 +1,23 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# Sample list to store posted products (you would need a database in a real implementation)
+products = []
+
+@app.route("/post_product", methods=["POST"])
+def post_product():
+    data = request.json
+    product = {
+        "name": data["name"],
+        "description": data["description"],
+    }
+    products.append(product)
+    return jsonify({"message": "Product posted successfully!"})
+
+@app.route("/get_products", methods=["GET"])
+def get_products():
+    return jsonify(products)
+
+if __name__ == "__main__":
+    app.run(debug=True)
